@@ -11,7 +11,7 @@ with open("requirements.txt") as f:
     required = f.read().splitlines()
 
 setup(
-    name="poja",
+    name="poja-by-tanjona",
     version=get_version(),
     description="Serverless Postgres+Java hosted on Github+AWS",
     long_description=get_long_description(),

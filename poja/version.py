@@ -11,4 +11,4 @@ def get_version():
         # if no local version file is found
         # then we suppose the call comes from installed package
         # and we just return the installed version
-        return version("poja")
+        return version("poja-by-tanjona")
