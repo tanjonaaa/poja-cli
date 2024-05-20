@@ -15,7 +15,7 @@ from poja.myos import cd_then_exec
 from pathlib import Path
 
 GIT_URL = "https://github.com/tanjonaaa/poja"
-GIT_TAG_OR_COMMIT = "6d1233a"
+GIT_TAG_OR_COMMIT = "4abb7c825a0420052830cf11028fe2072420d75e"
 
 DEFAULT_GROUP_NAME = "school.hei"
 DEFAULT_PACKAGE_FULL_NAME = DEFAULT_GROUP_NAME + ".poja"
