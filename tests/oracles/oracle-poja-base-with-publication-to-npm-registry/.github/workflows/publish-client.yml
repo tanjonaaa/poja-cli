@@ -26,8 +26,8 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          java-version: '21'
-          distribution: 'corretto'
+          java-version: "21"
+          distribution: "corretto"
 
       - name: Read gradle.properties file
         id: extract_version
@@ -38,28 +38,11 @@ jobs:
       - name: Generate typescript client
         run: ./gradlew generateTsClient -Pargs=${{ steps.extract_version.outputs.version }}
 
-      - name: install-aws-cli
-        uses: unfor19/install-aws-cli-action@v1.0.3
-        with:
-          version: 2
-          verbose: false
-          arch: amd64
-          rootdir: ''
-          workdir: ''
-
-      - uses: hei-school/aws-credentials-setter@v1.0.3
-        with:
-          secrets: ${{ toJSON(secrets) }}
-          region: ${{ env.AWS_REGION }}
-
-      - name: Configure npm client to connect to Codeartifact
-        run: |
-          sh ./.shell/initNpmrc.sh ${{ vars.CODEARTIFACT_REPOSITORY_NAME }} ${{ vars.CODEARTIFACT_DOMAIN_NAME }} ${{ vars.AWS_ACCOUNT_ID }} eu-west-3
-
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: 17.x
+          registry-url: "https://registry.npmjs.org"
 
       - name: Publish Typescript client
         run: |
@@ -71,3 +54,5 @@ jobs:
           npm config set always-auth true
           npm install
           npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
