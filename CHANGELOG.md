@@ -1,3 +1,12 @@
+# [13.3.0](https://github.com/tanjonaaa/poja-cli/compare/v13.1.0...v13.3.0) (2024-05-25)
+
+
+### Features
+
+* update commit hash ([427c706](https://github.com/tanjonaaa/poja-cli/commit/427c706028d590379e2890cb1d12a1a2db005145))
+
+
+
 # [13.2.0](https://github.com/tanjonaaa/poja-cli/compare/v13.1.0...v13.2.0) (2024-05-21)
 
 
