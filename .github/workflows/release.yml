@@ -57,17 +57,20 @@ jobs:
           git checkout -- poja-version.yml
         fi
 
-
     #######################################################
-    ################ RELEASE TO PYPI ######################
+    ################ DEPLOY SAM APPLICATION ###############
     #######################################################
 
-    - uses: actions/setup-python@v4
-      with:
-          python-version: 3.11
-    - name: Build and upload to PyPI
+    - name: Deploy SAM Application
       if: ${{ steps.conventional-ch.outputs.skipped == 'false' }}
       run: |
-        pip install -r requirements.txt -r requirements-dev.txt
-        python setup.py sdist bdist_wheel
-        python -m twine upload dist/* -u __token__ -p ${{ secrets.TWINE_PASSWORD }}
+        git config --global user.email ${{ secrets.JCLOUDIFY_ACCESS_GH_EMAIL }}
+        git config --global user.name ${{ secrets.JCLOUDIFY_ACCESS_GH_USERNAME }}
+        git clone https://${{ secrets.JCLOUDIFY_ACCESS_GH_USERNAME }}:${{ secrets.JCLOUDIFY_ACCESS_GH_TOKEN }}@github.com/jcloudify/poja-sam.git poja-sam
+        cd poja-sam
+        sed -i "s/{{cli_version}}/${{ env.nxc_version }}/g" poja_sam/Dockerfile
+        git add .
+        BRANCH_NAME="release/version-${{ env.nxc_version }}"
+        git checkout -b ${BRANCH_NAME}
+        git commit -m "release: set poja-cli version to ${{ env.nxc_version }}"
+        git push origin ${BRANCH_NAME}
